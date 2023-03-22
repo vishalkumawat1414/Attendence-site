@@ -5,20 +5,22 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 function Sheet() {
-	const [fdata, setData] = useState();
-	 var last ; //for Clearall button
-	 var first = 0; //starting point for clearall
+	const [fdata, setData] = useState([]);
+	var last; //for Clearall button
+	var first = 0; //starting point for clearall
 
 	const getData = async () => {
 		try {
-			let res = await fetch(
-				"https://attendence-site-server.onrender.com/api/get",
-				{}
-			);
-			const fdata = await res.json();
+			let res = await fetch("http://localhost:4200/api/get", {});
+			//const fdata = await res.json();
+
+			//for resolving error at end of json
+			const string = await res.text();
+			const re = string === "" ? {} : JSON.parse(string);
+			const fdata = Array.from(re);
 
 			setData(fdata);
-			// console.log("fdata",fdata);
+			//console.log("fdata",fdata);
 		} catch (error) {
 			console.log(error);
 		}
@@ -37,12 +39,9 @@ function Sheet() {
 		//console.log("jkdsjkakfjk", i);
 
 		try {
-			const result = axios.post(
-				"https://attendence-site-server.onrender.com/api/del",
-				{
-					data,
-				}
-			);
+			const result = axios.post("http://localhost:4200/api/del", {
+				data,
+			});
 
 			if (result.ok) {
 			}
@@ -58,7 +57,7 @@ function Sheet() {
 		} catch (error) {
 			console.log("error has occured in deletion", error);
 		}
-		await window.location.reload(false);
+		//await window.location.reload(false);
 	}
 
 	useEffect(() => {
@@ -98,7 +97,7 @@ function Sheet() {
 												<td className='p-4 w-1/4 '>
 													<div
 														key={i}
-														onClick={() => handelDelete({ i,item })}
+														onClick={() => handelDelete({ i, item })}
 														style={{ color: "red", cursor: "pointer" }}
 														className='hover:scale-105 flex flex-row '>
 														<MdClear size='1.4rem' />
@@ -113,7 +112,7 @@ function Sheet() {
 						</table>
 						{
 							<div
-								onClick={()=>handelDelete({first,last})}
+								onClick={() => handelDelete({ first, last })}
 								className='HeaderLeft sm:px-2 sm:py-1 cursor-pointer text-black absolute top-0 right-5 bg-gradient-to-b from-red-500 to-yellow-500 px-3 py-2 my-6 mx-auto flex items-center rounded-full shadow-md shadow-black hover:scale-110 duration-300  '>
 								Clear All
 							</div>
