@@ -11,7 +11,10 @@ function Sheet() {
 
 	const getData = async () => {
 		try {
-			let res = await fetch("http://localhost:4200/api/get", {});
+			let res = await fetch(
+				"https://attendence-site-server.onrender.com/api/get",
+				{}
+			);
 			//const fdata = await res.json();
 
 			//for resolving error at end of json
@@ -39,9 +42,12 @@ function Sheet() {
 		//console.log("jkdsjkakfjk", i);
 
 		try {
-			const result = axios.post("http://localhost:4200/api/del", {
-				data,
-			});
+			const result = axios.post(
+				"https://attendence-site-server.onrender.com/api/del",
+				{
+					data,
+				}
+			);
 
 			if (result.ok) {
 			}

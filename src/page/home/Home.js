@@ -24,9 +24,12 @@ function Home() {
 		// e.preventDefault();
 
 		try {
-			const result = await axios.post("http://localhost:4200/api/post", {
-				data,
-			});
+			const result = await axios.post(
+				"https://attendence-site-server.onrender.com/api/post",
+				{
+					data,
+				}
+			);
 			console.log("getting data s", data);
 			if (result.ok) {
 				navigate("/", { replace: true });
