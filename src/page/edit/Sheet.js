@@ -46,7 +46,7 @@ function Sheet() {
 
 			if (result.ok) {
 			}
-			const filteredList = fdata.filter((value) => {
+			const filteredList = await fdata?.filter((value) => {
 				if (value.length > 0) {
 					return value;
 				}
@@ -58,7 +58,7 @@ function Sheet() {
 		} catch (error) {
 			console.log("error has occured in deletion", error);
 		}
-		window.location.reload(false);
+		await window.location.reload(false);
 	}
 
 	useEffect(() => {
